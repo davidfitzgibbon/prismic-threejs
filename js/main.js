@@ -1,4 +1,4 @@
 import Sketch from "./app.js";
 
-let sketch = new Sketch();
+window.sketch = new Sketch();
 sketch.init();
