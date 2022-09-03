@@ -1,23 +1,45 @@
-import * as OMIO from "three/examples/jsm/libs/OimoPhysics/";
+import * as THREE from 'three'
+import * as OIMO from 'oimo'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
-// setup for three
-import Scene from "./components/three/Scene";
-import Renderer from "./components/three/Renderer";
-import Camera from "./components/three/Camera";
-
-// our shapes
-import Block from "./components/objects/Block";
-import Floor from "./components/objects/Floor";
+// our meshes
+import Block from './components/Block'
+import Floor from './components/Floor'
+import Ball from './components/Ball'
 
 class Sketch {
   constructor() {
+    // do all the boilerplate setup for ThreeJS
+    this.setup()
+
+    // add your code here
+
+    // kick off our animation!
+    this.animate()
+  }
+  // ANIMATION
+  animate() {
+    // your code here!
+
+    this.completeFrame()
+  }
+  completeFrame() {
+    // render this frame of our animation
+    this.renderer.render(this.scene, this.camera)
+    // line up our next frame
+    requestAnimationFrame(this.animate.bind(this))
+  }
+  // SETUP
+  setup() {
     this.sizes = {
       width: window.innerWidth,
       height: window.innerHeight,
-    };
-    this.scene = new Scene(this);
-    this.renderer = new Renderer(this);
-    this.camera = new Camera(this);
+    }
+    this.setupScene()
+    this.setupRenderer()
+    this.setupCamera()
+    this.setupLights()
+    new OrbitControls(this.camera, this.renderer.domElement)
 
     this.world = new OIMO.World({
       timestep: 1 / 60,
@@ -26,49 +48,58 @@ class Sketch {
       worldscale: 1, // scale full world
       random: true, // randomize sample
       info: false, // calculate statistic or not
-      gravity: [0, -9.8, 0],
-    });
+      gravity: [0, -98, 0],
+    })
 
-    document.body.appendChild(this.renderer.domElement);
-    window.addEventListener("resize", this.onWindowResize.bind(this), false);
+    document.body.appendChild(this.renderer.domElement)
+    window.addEventListener('resize', this.onWindowResize.bind(this), false)
   }
-  init() {
-    /* 
-    
-    add your shapes here!
-    
-    */
-    this.floor = new Floor(this);
-    this.block = new Block(this);
-
-    // kick off our animation!
-    this.animate();
+  setupCamera() {
+    this.camera = new THREE.PerspectiveCamera(
+      75,
+      this.sizes.width / this.sizes.height,
+      1,
+      1000
+    )
+    this.camera.position.x = 0
+    this.camera.position.y = 100
+    this.camera.position.z = 100
+    // this.camera.lookAt(0, 400, 0);
+    this.scene.add(this.camera)
   }
-  animate() {
-    // line up our next frame
-    requestAnimationFrame(this.animate.bind(this));
+  setupLights() {
+    let ambLight = new THREE.AmbientLight(0xffffff, 0.7, 100)
+    this.scene.add(ambLight)
 
-    /* 
-    
-      update your shapes here!
-
-    */
-    this.block.update();
-
-    // render this frame of our animation
-    this.renderer.update();
+    let dirLight = new THREE.DirectionalLight(0xffffff, 1, 100)
+    dirLight.position.set(-3, 5, -3)
+    this.scene.add(dirLight)
+  }
+  setupRenderer() {
+    this.renderer = new THREE.WebGLRenderer({ antialias: true })
+    this.renderer.setSize(this.sizes.width, this.sizes.height)
+    this.renderer.setPixelRatio(Math.min(2, window.devicePixelRatio))
+    this.renderer.shadowMap.enabled = true
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    this.renderer.physicallyCorrectLights = true
+    this.renderer.outputEncoding = THREE.sRGBEncoding
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping
+  }
+  setupScene() {
+    this.scene = new THREE.Scene()
+    this.scene.background = new THREE.Color(0xffffff)
   }
   onWindowResize() {
     this.sizes = {
       width: window.innerWidth,
       height: window.innerHeight,
-    };
+    }
 
-    this.camera.aspect = this.sizes.width / this.sizes.height;
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(this.sizes.width, this.sizes.height);
-    this.renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+    this.camera.aspect = this.sizes.width / this.sizes.height
+    this.camera.updateProjectionMatrix()
+    this.renderer.setSize(this.sizes.width, this.sizes.height)
+    this.renderer.setPixelRatio(Math.min(2, window.devicePixelRatio))
   }
 }
 
-export default Sketch;
+export default Sketch
