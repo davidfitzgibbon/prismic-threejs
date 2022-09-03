@@ -24,6 +24,8 @@ class Sketch {
     this.completeFrame()
   }
   completeFrame() {
+    // update world
+    this.world.step()
     // render this frame of our animation
     this.renderer.render(this.scene, this.camera)
     // line up our next frame
