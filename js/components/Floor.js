@@ -1,5 +1,4 @@
 import * as THREE from 'three'
-import * as OIMO from 'oimo'
 
 export default class Floor {
   constructor(sketch) {
