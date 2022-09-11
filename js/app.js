@@ -12,6 +12,23 @@ class Sketch {
     // do all the boilerplate setup for ThreeJS
     this.setup()
 
+    // SKETCH VARIABLES
+    // the width of one of our blocks
+    this.blockWidth = 20
+    // how many blocks we want around each level of the tower
+    this.count = 6
+    // how many levels we want in the tower
+    this.levels = 6
+    // the size of the gap we want between each block
+    this.mitreGap = 1.2
+    // the circumference of the tower
+    this.circumference = this.blockWidth * this.count * this.mitreGap
+    // the radius of the tower
+    this.radius = this.circumference / (Math.PI * 2)
+
+    // instantiate the Floor
+    this.floor = new Floor(this)
+
     // add your code here
 
     // kick off our animation!
@@ -19,6 +36,8 @@ class Sketch {
   }
   // ANIMATION
   animate() {
+    this.floor.update()
+
     // your code here!
 
     this.completeFrame()
