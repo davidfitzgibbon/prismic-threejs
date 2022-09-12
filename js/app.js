@@ -26,10 +26,8 @@ class Sketch {
     // the radius of the tower
     this.radius = this.circumference / (Math.PI * 2)
 
-    // instantiate the Floor
+    // instantiate components
     this.floor = new Floor(this)
-
-    // add your code here
 
     // kick off our animation!
     this.animate()
