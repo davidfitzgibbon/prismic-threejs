@@ -30,15 +30,19 @@ class Sketch {
     this.floor = new Floor(this)
     this.ball = new Ball(this)
 
+    this.blocks = []
+    this.blocks.push(new Block(this))
+
     // kick off our animation!
     this.animate()
   }
   // ANIMATION
   animate() {
+    // your code here!
     this.floor.update()
     this.ball.update()
 
-    // your code here!
+    this.blocks.forEach((block) => block.update())
 
     this.completeFrame()
   }
