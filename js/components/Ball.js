@@ -8,9 +8,21 @@ export default class Ball {
     this.mesh = new THREE.Mesh(this.geometry, this.material)
     sketch.scene.add(this.mesh)
 
+    const y = sketch.levels * sketch.blockWidth * 2
+    this.body = sketch.world.add({
+      type: 'sphere',
+      size: [sketch.radius],
+      pos: [0, y, 0],
+      move: true,
+      friction: 0.5,
+      restitution: 0.5,
+    })
+
     return this
   }
   update() {
     // animation
+    this.mesh.position.copy(this.body.getPosition())
+    this.mesh.quaternion.copy(this.body.getQuaternion())
   }
 }
