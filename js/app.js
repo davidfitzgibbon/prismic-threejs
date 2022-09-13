@@ -28,6 +28,7 @@ class Sketch {
 
     // instantiate components
     this.floor = new Floor(this)
+    this.ball = new Ball(this)
 
     // kick off our animation!
     this.animate()
@@ -35,6 +36,7 @@ class Sketch {
   // ANIMATION
   animate() {
     this.floor.update()
+    this.ball.update()
 
     // your code here!
 
@@ -83,7 +85,7 @@ class Sketch {
     this.camera.position.x = 0
     this.camera.position.y = 100
     this.camera.position.z = 100
-    // this.camera.lookAt(0, 400, 0);
+
     this.scene.add(this.camera)
   }
   setupLights() {
