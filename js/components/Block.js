@@ -7,6 +7,10 @@ export default class Block {
     const height = sketch.blockWidth * 0.5
     const depth = sketch.blockWidth * 0.5
 
+    const x = settings.x
+    const y = 20
+    const z = settings.z
+
     this.material = new THREE.MeshStandardMaterial({ color: 0xff0000 })
     this.geometry = new THREE.BoxGeometry(width, height, depth)
     this.mesh = new THREE.Mesh(this.geometry, this.material)
@@ -15,7 +19,7 @@ export default class Block {
     this.body = sketch.world.add({
       type: 'box',
       size: [width, height, depth],
-      pos: [0, 20, 0],
+      pos: [x, y, z],
       rot: [0, 0, 0],
       move: true,
       friction: 1,

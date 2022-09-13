@@ -31,7 +31,15 @@ class Sketch {
     this.ball = new Ball(this)
 
     this.blocks = []
-    this.blocks.push(new Block(this))
+    const angleSize = (Math.PI * 2) / this.count
+    for (let i = 0; i < this.count; i++) {
+      let angle = angleSize * i
+
+      const x = Math.sin(angle) * this.radius
+      const z = Math.cos(angle) * this.radius
+
+      this.blocks.push(new Block(this, { x, z }))
+    }
 
     // kick off our animation!
     this.animate()
