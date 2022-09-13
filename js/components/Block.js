@@ -8,7 +8,7 @@ export default class Block {
     const depth = sketch.blockWidth * 0.5
 
     const x = settings.x
-    const y = sketch.blockWidth
+    const y = settings.y * height + height
     const z = settings.z
 
     this.material = new THREE.MeshStandardMaterial({ color: 0xff0000 })

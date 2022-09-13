@@ -32,13 +32,19 @@ class Sketch {
 
     this.blocks = []
     const angleSize = (Math.PI * 2) / this.count
-    for (let i = 0; i < this.count; i++) {
-      let angle = angleSize * i
+    for (let y = 0; y < this.levels; y++) {
+      for (let i = 0; i < this.count; i++) {
+        const angle = angleSize * i
+        let additionalAngle = 0
+        if (y % 2) {
+          additionalAngle = angleSize * 0.5
+        }
 
-      const x = Math.sin(angle) * this.radius
-      const z = Math.cos(angle) * this.radius
+        const x = Math.sin(angle + additionalAngle) * this.radius
+        const z = Math.cos(angle + additionalAngle) * this.radius
 
-      this.blocks.push(new Block(this, { x, z }))
+        this.blocks.push(new Block(this, { x, y, z }))
+      }
     }
 
     // kick off our animation!
